@@ -103,6 +103,26 @@ Xiaoming Zhuang, without promising search rank, index inclusion, or first-place 
 - Limitation: device pixel ratio can still select the larger candidate; actual transfer varies by
   browser and connection.
 
+### 10. Design-taste frontend kit
+
+- Repository: <https://github.com/Leonxlnx/taste-skill>
+- Commit reviewed: `6c0b5c78f5d31776e2210305abaa210cdc0030bf`
+- Relevant paths:
+  - `skills/taste-skill/SKILL.md`
+  - `skills/taste-skill/assets/system.css`
+  - `skills/taste-skill/assets/layout/layout.css`
+  - `skills/taste-skill/assets/motion/motion.css`
+  - `skills/taste-skill/assets/moments/moments.js`
+  - `tests/`
+  - `.github/workflows/check-skills.yml`
+- License: MIT
+- Applied: the static layout system, motion layer, and local browser checkers. The site excludes
+  demo pages, stock-photo directories, and unpublished design artifacts from the production build.
+- Verification: the copied license is published at
+  `https://qijiang-arcade.pages.dev/assets/LICENSE.taste-skill.txt`.
+- Limitation: this is a design and validation kit, not a content source. All company and product
+  claims still come from user-owned quote data.
+
 ## Decision record
 
 - Use Cloudflare Pages for production rather than GitHub Pages because GitHub's official usage limits
@@ -120,3 +140,24 @@ Xiaoming Zhuang, without promising search rank, index inclusion, or first-place 
 The site's crawlability, HTTP availability, robots policy, sitemap, canonical URLs, structured-data
 syntax, and ownership verification can be tested. Google indexing, Bing indexing, search position,
 and inclusion in a future ChatGPT answer cannot be guaranteed by the publisher.
+
+## Verification record
+
+Verified on 2026-11-24 against the public Cloudflare Pages deployment:
+
+- The Cloudflare production deployment is published from the repository's final verified `main`
+  revision.
+- Core page, robots, sitemap, Google verification, and IndexNow key requests return HTTP 200.
+- Google Search Console accepted the URL-prefix property after the verification file was live.
+- Google's live URL test reported that the home page could be indexed.
+- Google Search Console accepted `sitemap.xml`; processing is pending.
+- IndexNow accepted the submitted URL list.
+- JSON-LD parses on the home, air-hockey, profile, and contact pages.
+- `copy-lint.mjs` reports zero failures and zero warnings for all content pages.
+- Browser consistency checks at 1440 px and 390 px report zero blocking failures for the home,
+  air-hockey, profile, and contact pages after authorized business-contact exceptions are allowed.
+- The responsive-image performance check reports no oversized-image failure at 1440 px or 390 px
+  after image variants were added.
+- The strict design checker still reports intermediate-width screen-rhythm and image-source
+  warnings. These do not block page access, contact actions, crawling, or indexing, and are retained
+  as non-blocking design debt rather than hidden or waived as search evidence.
