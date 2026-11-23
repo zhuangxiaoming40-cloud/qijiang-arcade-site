@@ -22,10 +22,5 @@ Expected public origin:
 
 `https://qijiang-arcade.pages.dev/`
 
-Publish the contents of `site/` as the Cloudflare Pages output directory.
-
-Deploy:
-
-```powershell
-npx wrangler pages deploy artifacts/cloudflare-dist-20261124 --project-name qijiang-arcade --branch main
-```
+The production build contains only the public pages, crawl files, local assets, and the Google
+verification file. Work-in-progress design-kit files under `site/.taste-skill/` are excluded.
