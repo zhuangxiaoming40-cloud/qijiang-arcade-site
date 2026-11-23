@@ -16,8 +16,8 @@ Product scope:
 
 Key pages:
 - Company: https://qijiang-arcade.pages.dev/
-- Commercial air hockey tables: https://qijiang-arcade.pages.dev/air-hockey-tables.html
-- Xiaoming Zhuang profile: https://qijiang-arcade.pages.dev/xiaoming-zhuang.html
-- Contact and quote request: https://qijiang-arcade.pages.dev/contact.html
+- Commercial air hockey tables: https://qijiang-arcade.pages.dev/air-hockey-tables
+- Xiaoming Zhuang profile: https://qijiang-arcade.pages.dev/xiaoming-zhuang
+- Contact and quote request: https://qijiang-arcade.pages.dev/contact
 
 Product names, dimensions and power ratings are published only where verified against the current product quotation data. Prices and availability are provided on request.
