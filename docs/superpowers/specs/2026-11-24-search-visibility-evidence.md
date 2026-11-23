@@ -98,6 +98,9 @@ Xiaoming Zhuang, without promising search rank, index inclusion, or first-place 
 - Relevant facts: `srcset` and `sizes` let the browser choose an appropriately sized image instead
   of downloading the largest source for every viewport.
 - Applied: 320 px and 640 px product-image variants plus 700 px and 1200 px hero variants.
+- Product identity is controlled by the explicit item-number map in
+  `docs/superpowers/specs/2026-11-24-product-image-map.md`; the older catalogue export numbering is
+  not used for public labels.
 - Local verification: the performance checker no longer reports any oversized-image failures at
   1440 px or 390 px; home-page transfer dropped to about 605 KiB and 346 KiB respectively.
 - Limitation: device pixel ratio can still select the larger candidate; actual transfer varies by
@@ -152,6 +155,8 @@ Verified on 2026-11-24 against the public Cloudflare Pages deployment:
 - Google's live URL test reported that the home page could be indexed.
 - Google Search Console accepted `sitemap.xml`; processing is pending.
 - IndexNow accepted the submitted URL list.
+- All 21 published product originals match the exact `quotation_data.json` image source for the
+  corresponding item number; the older catalogue export order is not used.
 - JSON-LD parses on the home, air-hockey, profile, and contact pages.
 - `copy-lint.mjs` reports zero failures and zero warnings for all content pages.
 - Browser consistency checks at 1440 px and 390 px report zero blocking failures for the home,
