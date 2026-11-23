@@ -1,6 +1,8 @@
 .taste-skill/
 shots/
 dist/
+artifacts/
+.wrangler/
 node_modules/
 *.log
 .DS_Store
