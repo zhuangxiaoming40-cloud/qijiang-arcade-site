@@ -13,6 +13,7 @@ SITE = ROOT / "site"
 DATA_PATH = ROOT / "data" / "catalog.json"
 PRODUCT_ROOT = SITE / "products"
 BASE_URL = "https://qijiang-arcade.pages.dev"
+FACEBOOK_URL = "https://www.facebook.com/QIJIANGTECHNOLOGY/"
 IMAGE_MAP_PATH = (
     ROOT / "docs" / "superpowers" / "specs" / "2026-11-24-product-image-map.md"
 )
@@ -131,6 +132,7 @@ def organization_json() -> dict[str, Any]:
         "alternateName": "Qijiang Arcade",
         "url": f"{BASE_URL}/",
         "logo": f"{BASE_URL}/favicon.svg",
+        "sameAs": [FACEBOOK_URL],
         "description": "Manufacturer of commercial arcade equipment in Guangzhou, China.",
         "email": "zhuangxiaoming40@gmail.com",
         "telephone": "+86 176 9134 2432",
@@ -277,6 +279,7 @@ def footer_html(categories: list[dict[str, Any]]) -> str:
             <li><a href="mailto:zhuangxiaoming40@gmail.com">zhuangxiaoming40@gmail.com</a></li>
             <li><a href="tel:+8617691342432">+86 176 9134 2432</a></li>
             <li><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li>
+            <li><a href="{FACEBOOK_URL}">Facebook page</a></li>
             <li>Guangzhou, Guangdong, China</li>
           </ul>
         </div>
@@ -512,6 +515,7 @@ def build_home_page(
           <li><span>Email</span><a href="mailto:zhuangxiaoming40@gmail.com">zhuangxiaoming40@gmail.com</a></li>
           <li><span>Phone</span><a href="tel:+8617691342432">+86 176 9134 2432</a></li>
           <li><span>WhatsApp</span><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li>
+          <li><span>Facebook</span><a href="{FACEBOOK_URL}">Visit our Facebook page</a></li>
           <li><span>Address</span><strong>No. 18 Nanyuan Avenue, Kengtou, Nancun Town, Panyu District, Guangzhou, Guangdong, China</strong></li>
         </ul>
       </div>
@@ -564,15 +568,50 @@ def update_existing_pages(catalog: dict[str, Any]) -> None:
         "Send the machine type, quantity and destination country for 13 air hockey models and other arcade equipment. Enquiries go to Xiaoming Zhuang at Guangzhou Qijiang Technology Co., Ltd.": contact_copy,
         "Commercial arcade equipment for family entertainment centers in Guangzhou, including 13 air hockey table models. Ask for specifications, export packing or a quote.": profile_copy,
     }
-    for path in [SITE / "contact.html", SITE / "xiaoming-zhuang.html"]:
+    for path in [
+        SITE / "contact.html",
+        SITE / "xiaoming-zhuang.html",
+        SITE / "privacy.html",
+        SITE / "credits.html",
+    ]:
         text = path.read_text(encoding="utf-8")
         for old, new in copy_replacements.items():
             text = text.replace(old, new)
+        same_as = f'"sameAs": ["{FACEBOOK_URL}"]'
+        if same_as not in text:
+            text = text.replace(
+                '"logo": "https://qijiang-arcade.pages.dev/favicon.svg",',
+                f'"logo": "https://qijiang-arcade.pages.dev/favicon.svg",\n'
+                f'      {same_as},',
+            )
+            text = text.replace(
+                '{"@type":"Organization","@id":"https://qijiang-arcade.pages.dev/#organization","name":"Guangzhou Qijiang Technology Co., Ltd.","url":"https://qijiang-arcade.pages.dev/"}',
+                '{"@type":"Organization","@id":"https://qijiang-arcade.pages.dev/#organization","name":"Guangzhou Qijiang Technology Co., Ltd.","url":"https://qijiang-arcade.pages.dev/","sameAs":["'
+                + FACEBOOK_URL
+                + '"]}',
+            )
+        if f'href="{FACEBOOK_URL}"' not in text:
+            text = text.replace(
+                '<li><span>WhatsApp</span><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li>',
+                '<li><span>WhatsApp</span><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li>\n'
+                f'          <li><span>Facebook</span><a href="{FACEBOOK_URL}">Visit our Facebook page</a></li>',
+            )
+            text = text.replace(
+                '<li><span>WhatsApp</span><a href="https://wa.me/8617691342432?text=Hello%20Xiaoming%2C%20I%20found%20your%20company%20profile.">Open WhatsApp chat</a></li>',
+                '<li><span>WhatsApp</span><a href="https://wa.me/8617691342432?text=Hello%20Xiaoming%2C%20I%20found%20your%20company%20profile.">Open WhatsApp chat</a></li>\n'
+                f'          <li><span>Facebook</span><a href="{FACEBOOK_URL}">Visit our Facebook page</a></li>',
+            )
+            text = text.replace(
+                '<li><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li><li>Guangzhou, Guangdong, China</li>',
+                '<li><a href="https://wa.me/8617691342432">Open WhatsApp chat</a></li>'
+                f'<li><a href="{FACEBOOK_URL}">Facebook page</a></li><li>Guangzhou, Guangdong, China</li>',
+            )
         path.write_text(text, encoding="utf-8", newline="\n")
 
     llms = (
         "# Guangzhou Qijiang Technology Co., Ltd.\n\n"
         "Official company website: https://qijiang-arcade.pages.dev/\n\n"
+        f"Official Facebook page: {FACEBOOK_URL}\n\n"
         "Guangzhou Qijiang Technology Co., Ltd. supplies commercial arcade and amusement "
         "equipment from Guangzhou, Guangdong, China.\n\n"
         "Export sales contact:\n"

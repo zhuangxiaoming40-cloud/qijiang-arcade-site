@@ -5,10 +5,12 @@ import re
 import sys
 import unittest
 from pathlib import Path
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+FACEBOOK_URL = "https://www.facebook.com/QIJIANGTECHNOLOGY/"
 
 
 class CatalogDataTests(unittest.TestCase):
@@ -87,6 +89,36 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertNotIn("US$", page)
         product_entity = next(entry for entry in payload["@graph"] if entry["@type"] == "Product")
         self.assertNotIn("sku", product_entity)
+
+    def test_organization_schema_links_verified_facebook_profile(self) -> None:
+        import build_catalog
+
+        build_catalog.build()
+
+        sitemap = (ROOT / "site" / "sitemap.xml").read_text(encoding="utf-8")
+        pages = []
+        for location in re.findall(r"<loc>(.*?)</loc>", sitemap):
+            route = urlsplit(location).path
+            if route == "/":
+                pages.append(ROOT / "site" / "index.html")
+            elif route.endswith("/"):
+                pages.append(ROOT / "site" / route.lstrip("/") / "index.html")
+            else:
+                pages.append(ROOT / "site" / f"{route.lstrip('/')}.html")
+        self.assertEqual(len(pages), 76)
+        for path in pages:
+            self.assertTrue(path.exists(), path)
+            text = path.read_text(encoding="utf-8")
+            json_ld = re.search(
+                r'<script type="application/ld\+json">(.*?)</script>', text, re.DOTALL
+            )
+            self.assertIsNotNone(json_ld, path)
+            payload = json.loads(json_ld.group(1))
+            organization = next(
+                entry for entry in payload["@graph"] if entry["@type"] == "Organization"
+            )
+            self.assertIn(FACEBOOK_URL, organization["sameAs"], path)
+            self.assertIn(f'href="{FACEBOOK_URL}"', text, path)
 
     def test_generated_product_pages_omit_missing_source_specs(self) -> None:
         import build_catalog
