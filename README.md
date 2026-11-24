@@ -9,10 +9,29 @@ Public contact: Xiaoming Zhuang, Export Sales, <zhuangxiaoming40@gmail.com>, Wha
 ## Site
 
 - Company landing page: `site/index.html`
-- Commercial air hockey tables: `site/air-hockey-tables.html`
+- Complete catalogue: `site/products/index.html`
+- Ten category pages and 60 product pages: generated under `site/products/`
 - Xiaoming Zhuang profile: `site/xiaoming-zhuang.html`
 - Contact page: `site/contact.html`
 - Crawl files: `site/robots.txt`, `site/sitemap.xml`, `site/llms.txt`
+- Source catalogue data: `data/catalog.json`
+
+## Build and verify
+
+```powershell
+python -m pip install -r requirements-dev.txt
+python scripts/build_catalog.py
+python -m unittest tests.test_catalog_build -v
+python scripts/validate_catalog.py
+python scripts/build_site.py
+```
+
+The catalogue generator follows the data-driven patterns used by Astro content collections and
+11ty pagination, with the collection/product layout used by Vercel Commerce. Prices and customer
+data from the source quotation are intentionally excluded from the public build. The source PDF
+has catalogue row numbers but no manufacturer model codes, so public pages use `Catalogue item`
+references and do not publish a fabricated SKU. Pillow is a development-only validation dependency;
+the deployed site has no runtime dependency.
 
 ## Deployment
 
