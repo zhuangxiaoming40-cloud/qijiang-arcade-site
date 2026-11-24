@@ -111,8 +111,25 @@ metadata.
 - [x] Run `python scripts/validate_catalog.py`.
 - [x] Run `python scripts/build_catalog.py`.
 - [x] Parse all generated JSON-LD and XML.
-- [ ] Verify every generated product page and image over live HTTP after deployment.
+- [x] Verify every generated product page and image over live HTTP after deployment.
 - [x] Run copy lint on representative catalogue pages.
 - [x] Run browser checks at 1440, 1024, 820, 768, 390, and 320 pixels.
 - [x] Run the performance check.
-- [ ] Deploy to Cloudflare Pages and submit the refreshed sitemap with IndexNow.
+- [x] Deploy to Cloudflare Pages and submit the refreshed sitemap with IndexNow.
+
+## Release Record
+
+- Production commit: `d5634059e91c41fddd799f25e5a2e287743ab9b7`
+- Cloudflare deployment: `https://50d6444b.qijiang-arcade.pages.dev`
+- Production origin: `https://qijiang-arcade.pages.dev/`
+- Automated tests: 17 passed.
+- Catalogue validation: 60 products, 10 categories, 71 catalogue pages, 120 responsive
+  images, and 76 unique sitemap URLs passed.
+- Live HTTP: all 76 sitemap URLs returned 200 with exact byte matches to `dist`.
+- Legacy redirects: `/air-hockey-tables` and `/air-hockey-tables.html` return 301 to
+  `/products/commercial-air-hockey-tables/`.
+- IndexNow: HTTP 200 accepted for all 76 URLs.
+- Google Search Console: sitemap resubmitted and accepted; Google is still processing it.
+- Strict design gate: the retained semantic/rhythm audit remains open, but the release build
+  has no critical overflow, collision, clipping, or horizontal-scroll findings at the required
+  widths.
