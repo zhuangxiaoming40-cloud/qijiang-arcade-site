@@ -100,3 +100,21 @@ Date: 2026-11-24
 - A manual URL indexing request reached Google's daily quota. This is a temporary platform limit,
   not a website error.
 - Current automated verification: 18 tests passed after the Facebook identity update.
+- Final promotion release: GitHub commit `f073311668fc470a9e5e35fa9d2f9987f2dbfaa5`;
+  Cloudflare Production deployment `dbad4b02-93e7-4951-bdc7-cfce319c507a`; production origin
+  `https://qijiang-arcade.pages.dev/`.
+- Final live verification after deployment: 76/76 sitemap URLs returned HTTP 200, and all 76
+  contained both the verified Facebook URL and `Organization.sameAs`.
+- Final IndexNow submission: `2026-11-24T10:24:40.502257+00:00`, 76 URLs, HTTP 200 with `OK`.
+
+## Channel status
+
+| Channel | Status | Evidence / limitation |
+|---|---|---|
+| Company website | Published | 76 live pages and social identity connected |
+| IndexNow | Submitted | HTTP 200 for 76 URLs; indexing not guaranteed |
+| Google Search Console | Sitemap accepted | Processing pending; manual URL inspection hit daily quota |
+| Facebook Page | Published | New catalogue post and Page website link verified |
+| Public Facebook group | Published | Post accepted in a group explicitly for arcade-machine sales |
+| LinkedIn | Not published | Browser has saved accounts but is not authenticated for this company |
+| Google Business Profile | Blocked | Setup flow returned an international-sanctions restriction for the region |
